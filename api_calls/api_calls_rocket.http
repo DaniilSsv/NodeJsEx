@@ -1,0 +1,38 @@
+### alle rockets ophalen
+GET http://localhost:3001/api/rockets
+x-auth-token: 
+
+### new rocket aanmaken
+POST http://localhost:3001/api/rockets
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Rocket Name",
+    "agencyId": "665ee9ebce47e43f650ebf33",
+    "payloadCapacity": 10000,
+    "fuelType": "liquid",
+    "launchDate": "2024-05-20"
+}
+
+
+### rocket updaten 
+PUT http://localhost:3001/api/rockets/:id
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Updated Rocket Name",
+    "agencyId": "Agency ID",
+    "payloadCapacity": 12000,
+    "fuelType": "solid",
+    "launchDate": "2024-06-01"
+}
+
+### rocket verwijderen
+DELETE http://localhost:3001/api/rockets/:id
+x-auth-token: 
+
+### specifieke rocket ophalen
+GET http://localhost:3001/api/rockets/:id
+x-auth-token: 

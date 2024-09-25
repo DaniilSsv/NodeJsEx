@@ -1,0 +1,1073 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Rocket-api",
+    "description": "API Documentation for Rocket API",
+    "version": "1.0.0"
+  },
+  "host": "myrocketapp-34740598b7f1.herokuapp.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/api/auth/register": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Register a new user",
+        "description": "Routes for user authentication",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "exampleuser"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123"
+                }
+              },
+              "required": [
+                "username",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully registered user and returned token",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "400": {
+            "description": "Invalid request body or user already exists",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "tags": [
+          "Authentication"
+        ],
+        "summary": "Login a user",
+        "description": "Routes for user authentication",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string",
+                  "example": "exampleuser"
+                },
+                "password": {
+                  "type": "string",
+                  "example": "password123"
+                }
+              },
+              "required": [
+                "username",
+                "password"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully logged in user and returned token",
+            "schema": {
+              "$ref": "#/definitions/Token"
+            }
+          },
+          "400": {
+            "description": "Invalid credentials or request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/agencies/": {
+      "get": {
+        "tags": [
+          "Agencies"
+        ],
+        "summary": "Get all Agencies",
+        "description": "Get all agencies",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A JSON array of all agencies",
+            "schema": {
+              "$ref": "#/definitions/Agency"
+            }
+          },
+          "400": {
+            "description": "Error fetching agencies",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Agencies"
+        ],
+        "summary": "Create a new Agency",
+        "description": "Create a new agency",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Agency information",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "NASA"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "USA"
+                },
+                "contactEmail": {
+                  "type": "string",
+                  "example": "info@nasa.gov"
+                },
+                "establishedYear": {
+                  "type": "number",
+                  "example": 1958
+                },
+                "completedLaunches": {
+                  "type": "number",
+                  "example": 100
+                },
+                "failedLaunches": {
+                  "type": "number",
+                  "example": 10
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created agency",
+            "schema": {
+              "$ref": "#/definitions/Agency"
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        }
+      }
+    },
+    "/api/agencies/{id}": {
+      "get": {
+        "tags": [
+          "Agencies"
+        ],
+        "summary": "Get an Agency by ID",
+        "description": "Get an agency by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Agency ID",
+            "format": "ObjectId"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved agency",
+            "schema": {
+              "$ref": "#/definitions/Agency"
+            }
+          },
+          "400": {
+            "description": "Invalid agency ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Agency not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Agencies"
+        ],
+        "summary": "Update an Agency by ID",
+        "description": "Update an agency by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Agency ID",
+            "format": "ObjectId"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Agency data",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Updated Agency Name"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Updated Location"
+                },
+                "contactEmail": {
+                  "type": "string",
+                  "example": "updated@agency.com"
+                },
+                "establishedYear": {
+                  "type": "number",
+                  "example": 2020
+                },
+                "completedLaunches": {
+                  "type": "number",
+                  "example": 50
+                },
+                "failedLaunches": {
+                  "type": "number",
+                  "example": 5
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated agency",
+            "schema": {
+              "$ref": "#/definitions/Agency"
+            }
+          },
+          "400": {
+            "description": "Invalid agency ID or request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Agency not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Agencies"
+        ],
+        "summary": "Delete an Agency by ID",
+        "description": "Delete an agency by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Agency ID",
+            "format": "ObjectId"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted agency",
+            "schema": {
+              "$ref": "#/definitions/Agency"
+            }
+          },
+          "400": {
+            "description": "Invalid agency ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Agency not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/landingPads/": {
+      "get": {
+        "tags": [
+          "Landing Pads"
+        ],
+        "summary": "Get all landing pads",
+        "description": "Routes for managing landing pads",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved landing pads",
+            "schema": {
+              "$ref": "#/definitions/LandingPad"
+            }
+          },
+          "400": {
+            "description": "Error fetching landing pads",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Landing Pads"
+        ],
+        "summary": "Create a new landing pad",
+        "description": "Routes for managing landing pads",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "LC-39A"
+                },
+                "status": {
+                  "type": "string",
+                  "example": "active"
+                },
+                "location": {
+                  "type": "string",
+                  "example": "Cape Canaveral, FL, USA"
+                }
+              },
+              "required": [
+                "name",
+                "status",
+                "location"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created landing pad",
+            "schema": {
+              "$ref": "#/definitions/LandingPad"
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/landingPads/{id}": {
+      "get": {
+        "tags": [
+          "Landing Pads"
+        ],
+        "summary": "Get a landing pad by ID",
+        "description": "Routes for managing landing pads",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Landing pad ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved landing pad",
+            "schema": {
+              "$ref": "#/definitions/LandingPad"
+            }
+          },
+          "400": {
+            "description": "Invalid landing pad ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Landing pad not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Landing Pads"
+        ],
+        "summary": "Update a landing pad by ID",
+        "description": "Routes for managing landing pads",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Landing pad ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "rocketId": {
+                  "example": "any"
+                },
+                "location": {
+                  "example": "any"
+                },
+                "surfaceType": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated landing pad",
+            "schema": {
+              "$ref": "#/definitions/LandingPad"
+            }
+          },
+          "400": {
+            "description": "Invalid landing pad ID or request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Landing pad not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Landing Pads"
+        ],
+        "summary": "Delete a landing pad by ID",
+        "description": "Routes for managing landing pads",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Landing pad ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted landing pad",
+            "schema": {
+              "$ref": "#/definitions/LandingPad"
+            }
+          },
+          "400": {
+            "description": "Invalid landing pad ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Landing pad not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/rockets/": {
+      "get": {
+        "tags": [
+          "Rockets"
+        ],
+        "summary": "Get all rockets",
+        "description": "Routes for managing rockets",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved rockets",
+            "schema": {
+              "$ref": "#/definitions/Rocket"
+            }
+          },
+          "400": {
+            "description": "Error fetching rockets",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Rockets"
+        ],
+        "summary": "Create a new rocket",
+        "description": "Routes for managing rockets",
+        "parameters": [
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "example": "Falcon 9"
+                },
+                "agencyId": {
+                  "type": "string",
+                  "example": "5e79dfb4a61a9c001722e492"
+                },
+                "payloadCapacity": {
+                  "type": "number",
+                  "example": 22800
+                },
+                "fuelType": {
+                  "type": "string",
+                  "example": "liquid"
+                },
+                "launchDate": {
+                  "type": "string",
+                  "example": "2024-05-01"
+                }
+              },
+              "required": [
+                "name",
+                "agencyId",
+                "payloadCapacity",
+                "fuelType",
+                "launchDate"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully created rocket",
+            "schema": {
+              "$ref": "#/definitions/Rocket"
+            }
+          },
+          "400": {
+            "description": "Invalid request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "500": {
+            "description": "Server error",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/api/rockets/{id}": {
+      "get": {
+        "tags": [
+          "Rockets"
+        ],
+        "summary": "Get a rocket by ID",
+        "description": "Routes for managing rockets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Rocket ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved rocket",
+            "schema": {
+              "$ref": "#/definitions/Rocket"
+            }
+          },
+          "400": {
+            "description": "Invalid rocket ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Rocket not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Rockets"
+        ],
+        "summary": "Update a rocket by ID",
+        "description": "Routes for managing rockets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Rocket ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "example": "any"
+                },
+                "agencyId": {
+                  "example": "any"
+                },
+                "payloadCapacity": {
+                  "example": "any"
+                },
+                "fuelType": {
+                  "example": "any"
+                },
+                "launchDate": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully updated rocket",
+            "schema": {
+              "$ref": "#/definitions/Rocket"
+            }
+          },
+          "400": {
+            "description": "Invalid rocket ID or request body",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Rocket not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Rockets"
+        ],
+        "summary": "Delete a rocket by ID",
+        "description": "Routes for managing rockets",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Rocket ID"
+          },
+          {
+            "name": "x-auth-token",
+            "description": "Authorization token",
+            "required": true,
+            "type": "string",
+            "in": "header"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully deleted rocket",
+            "schema": {
+              "$ref": "#/definitions/Rocket"
+            }
+          },
+          "400": {
+            "description": "Invalid rocket ID",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Rocket not found",
+            "schema": {
+              "$ref": "#/definitions/Error"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Token": {
+      "type": "object",
+      "properties": {
+        "token": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "Error": {
+      "type": "object",
+      "properties": {
+        "msg": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "Agency": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "location": {
+          "type": "string",
+          "example": "string"
+        },
+        "contactEmail": {
+          "type": "string",
+          "example": "string"
+        },
+        "establishedYear": {
+          "type": "string",
+          "example": "integer"
+        },
+        "completedLaunches": {
+          "type": "string",
+          "example": "integer"
+        },
+        "failedLaunches": {
+          "type": "string",
+          "example": "integer"
+        }
+      }
+    },
+    "LandingPad": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "rocketId": {
+          "type": "string",
+          "example": "ObjectId"
+        },
+        "location": {
+          "type": "string",
+          "example": "string"
+        },
+        "surfaceType": {
+          "type": "string",
+          "example": "string"
+        }
+      }
+    },
+    "Rocket": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "example": "string"
+        },
+        "agencyId": {
+          "type": "string",
+          "example": "ObjectId"
+        },
+        "payloadCapacity": {
+          "type": "string",
+          "example": "integer"
+        },
+        "fuelType": {
+          "type": "string",
+          "example": "string"
+        },
+        "launchDate": {
+          "type": "string",
+          "example": "date"
+        }
+      }
+    }
+  },
+  "apis": [
+    "./routes/*.js"
+  ]
+}

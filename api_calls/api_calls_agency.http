@@ -1,0 +1,39 @@
+### alle agencies ophalen
+GET http://localhost:3001/api/agencies
+x-auth-token: 
+
+### new agency aanmaken
+POST http://localhost:3001/api/agencies
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Agency Name",
+    "location": "Agency Location",
+    "contactEmail": "agency@email.com",
+    "establishedYear": 2022,
+    "completedLaunches": 10,
+    "failedLaunches": 2
+}
+
+### agency updaten 
+PUT http://localhost:3001/api/agencies/:id
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Updated Agency Name",
+    "location": "Updated Agency Location",
+    "contactEmail": "updated@email.com",
+    "establishedYear": 2023,
+    "completedLaunches": 15,
+    "failedLaunches": 3
+}
+
+### agency verwijderen
+DELETE http://localhost:3001/api/agencies/:id
+x-auth-token: 
+
+### specifieke agency ophalen
+GET http://localhost:3001/api/agencies/:id
+x-auth-token: 

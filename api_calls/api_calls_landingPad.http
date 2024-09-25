@@ -1,0 +1,37 @@
+### alle landingpads ophalen
+GET http://localhost:3001/api/landingpads
+x-auth-token: 
+
+### new landingpad aanmaken
+POST http://localhost:3001/api/landingpads
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Landing Pad Name",
+    "rocketId": "665eea06ce47e43f650ebf38",
+    "location": "Landing Pad Location",
+    "surfaceType": "concrete"
+}
+
+
+### landingpad updaten 
+PUT http://localhost:3001/api/landingpads/:id
+x-auth-token: 
+Content-Type: application/json
+
+{
+    "name": "Updated Landing Pad Name",
+    "rocketId": "Rocket ID",
+    "location": "Updated Landing Pad Location",
+    "surfaceType": "asphalt"
+}
+
+
+### landingpad verwijderen
+DELETE http://localhost:3001/api/landingpads/:id
+x-auth-token: 
+
+### specifieke landingpad ophalen
+GET http://localhost:3001/api/landingpads/:id
+x-auth-token: 
